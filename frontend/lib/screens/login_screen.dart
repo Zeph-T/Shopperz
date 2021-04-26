@@ -107,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       _registerUser();
+                      Navigator.pushReplacementNamed(context, '/home');
                     } else {
                       print('Invalid');
                     }

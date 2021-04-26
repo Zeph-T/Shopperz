@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "udemy_course",
-            "program": "lib/main.dart",
+            "program": "frontend/lib/main.dart",
             "request": "launch",
             "type": "dart"
         }

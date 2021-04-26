@@ -41,6 +41,7 @@ router.post('/signin',(req,res)=>{
             res.status(404);
         }
         else if(user!==null){
+            req.Id = user._id;
             res.status(200);
             res.json(user);
         }else{
@@ -51,5 +52,6 @@ router.post('/signin',(req,res)=>{
         }
     })
 })
+
 
 module.exports = router;

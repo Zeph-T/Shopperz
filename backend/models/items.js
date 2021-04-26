@@ -30,11 +30,18 @@ const ItemSchema = mongoose.Schema({
     Description:{
         type:String
     },
-    Quantity: {
-        type:Number,
-        required:true,
-        default : 0
-    }
+    Availability: [{
+        size:{
+            type:String,
+        },
+        quauntity:{
+            type:Number
+        }
+    }],
+    category:[{
+        type:'String',
+        required:true
+    }]
 })
 
 module.exports = mongoose.model('Item',ItemSchema);

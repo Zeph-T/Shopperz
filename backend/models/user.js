@@ -20,6 +20,10 @@ const UserSchema = mongoose.Schema({
     CreatedOn: {
         type:Date,
         default : Date.now()
+    },
+    isVendor:{
+        type:Boolean,
+        defualt:false
     }
 })
 
