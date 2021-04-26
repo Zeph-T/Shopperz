@@ -1,55 +1,102 @@
 const express = require('express');
 const Vendor = require('../models/vendor');
 const router = express.Router();
-
-router.post('/signup',(req,res)=>{
-    Vendor.findOne({mobileNumber : req.body.mobileNumber},(err,vendor)=>{
-        if(err){
+const Item = require('../models/items');
+const Image = require('../models/image');
+router.post('/signup', (req, res) => {
+    Vendor.findOne({ mobileNumber: req.body.mobileNumber }, (err, vendor) => {
+        if (err) {
             console.log(err)
             res.json(err)
-        }else{
-            if(vendor == null){
+        } else {
+            if (vendor == null) {
                 const vendor = Vendor({
-                    mobileNumber : req.body.mobileNumber,
-                    email : req.body.email,
+                    mobileNumber: req.body.mobileNumber,
+                    email: req.body.email,
                     password: req.body.password,
-                    name:req.body.name
+                    name: req.body.name
                 })
-                vendor.save().then(err=>{
-                    if(err){
+                vendor.save().then(err => {
+                    if (err) {
                         console.log(err);
                         res.json(err);
                     }
-                    else{
+                    else {
                         res.json(vendor);
                     }
                 })
-            }else{
+            } else {
                 res.status(409);
                 res.json({
-                    message : 'mobile number  is already taken'
+                    message: 'mobile number  is already taken'
                 })
             }
         }
     })
 })
 
-router.post('/signin',(req,res)=>{
-    Vendor.findOne({mobileNumber:req.body.mobileNumber,password:req.body.password},(err,vendor)=>{
-        if(err){
+router.post('/signin', (req, res) => {
+    Vendor.findOne({ mobileNumber: req.body.mobileNumber, password: req.body.password }, (err, vendor) => {
+        if (err) {
             console.log(err);
             res.status(404);
         }
-        else if(vendor!==null){
+        else if (vendor !== null) {
             req.Id = vendor._id;
             res.status(200);
             res.json(vendor);
-        }else{
+        } else {
             res.status(404);
             res.json({
-                message : 'Vendor Details not found'
+                message: 'Vendor Details not found'
             })
         }
+    })
+})
+
+router.post('/:number/addItem', async (req, res) => {
+    let number = req.params.number;
+    let VendorId = await Vendor.findOne({ mobileNumber: number }, { _id: 1 }).catch(err => {
+        res.send(err);
+    });
+    const ItemImage = new Image();
+    ItemImage.imageData = new Buffer(req.body.image.split(",")[1],"base64");
+    ItemImage.save((err, img) => {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            let item = new Item();
+            item.Name = req.body.name;
+            item.Vendor = VendorId._id;
+            item.cost = req.body.cost;
+            item.Description = req.body.Description;
+            item.Availability = req.body.Availability,
+                item.category = req.body.category;
+            item.imageData = img._id;
+            item.save((err, SavedItem) => {
+                if (err) {
+                    res.send(err);
+                } else {
+                    Vendor.findOneAndUpdate({ mobileNumber: number }, { $push: { Items: SavedItem._id } }).then(
+                        res.send('Succesfully Added the Item')
+                    ).catch(err => {
+                        res.send(err);
+                    });
+                }
+            })
+        }
+    })
+
+
+})
+
+router.get('/:number/myItems', (req, res) => {
+    let mobileNumber = req.params.number;
+    Vendor.find({ mobileNumber: mobileNumber }).populate({ path: 'Items', model: 'Item', select: { name: 1, cost: 1, image: 1 } }).then(items => {
+        res.send(items);
+    }).catch(err => {
+        res.send(err);
     })
 })
 

@@ -24,6 +24,14 @@ const UserSchema = mongoose.Schema({
     isVendor:{
         type:Boolean,
         defualt:false
+    },
+    cart:[{
+        type:mongoose.Types.ObjectId,
+        ref:'Item'
+    }],
+    Liked:{
+        type:mongoose.Types.ObjectId,
+        ref:'Item'
     }
 })
 
