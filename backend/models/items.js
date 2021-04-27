@@ -39,9 +39,14 @@ const ItemSchema = mongoose.Schema({
         }
     }],
     category:[{
-        type:'String',
+        type:String,
         required:true
-    }]
+    }],
+    imageData : [
+        {
+            type:String
+        }
+    ]
 })
 
 module.exports = mongoose.model('Item',ItemSchema);

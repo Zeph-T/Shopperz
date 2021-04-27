@@ -2,7 +2,16 @@ const express = require('express');
 const Vendor = require('../models/vendor');
 const router = express.Router();
 const Item = require('../models/items');
-const Image = require('../models/image');
+
+
+// var storage = multer.diskStorage({
+//     destination : function(req,file,cb){
+//         cb(null,'uploads');
+//     },
+//     filename : function(req,file,cb){
+        
+//     }
+// })
 router.post('/signup', (req, res) => {
     Vendor.findOne({ mobileNumber: req.body.mobileNumber }, (err, vendor) => {
         if (err) {
@@ -59,21 +68,15 @@ router.post('/:number/addItem', async (req, res) => {
     let VendorId = await Vendor.findOne({ mobileNumber: number }, { _id: 1 }).catch(err => {
         res.send(err);
     });
-    const ItemImage = new Image();
-    ItemImage.imageData = new Buffer(req.body.image.split(",")[1],"base64");
-    ItemImage.save((err, img) => {
-        if (err) {
-            res.send(err);
-        }
-        else {
+  //  ItemImage.imageData = new Buffer(req.body.image.split(",")[1],"base64");
             let item = new Item();
             item.Name = req.body.name;
             item.Vendor = VendorId._id;
             item.cost = req.body.cost;
             item.Description = req.body.Description;
             item.Availability = req.body.Availability,
-                item.category = req.body.category;
-            item.imageData = img._id;
+            item.category = req.body.category;
+            item.imageData = req.body.image;
             item.save((err, SavedItem) => {
                 if (err) {
                     res.send(err);
@@ -85,10 +88,6 @@ router.post('/:number/addItem', async (req, res) => {
                     });
                 }
             })
-        }
-    })
-
-
 })
 
 router.get('/:number/myItems', (req, res) => {
