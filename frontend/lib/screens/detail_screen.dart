@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../models/Product.dart';
-import '../components/detail/body.dart';
-import '../components/detail/custom_app_bar.dart';
+import '../../models/Product.dart';
+import '/components/detail/body.dart';
+import '/components/detail/custom_app_bar.dart';
 
 class DetailsScreen extends StatelessWidget {
   static String routeName = "/details";

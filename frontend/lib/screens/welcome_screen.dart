@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants.dart';
+import 'package:shopperz/constants.dart';
 
 class Welcome extends StatelessWidget {
   @override
