@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import './constants.dart';
+import './screens/cart_screen.dart';
+import './screens/favorites_screen.dart';
+import './screens/orders_screens.dart';
+import './screens/profile_screen.dart';
+import '/constants.dart';
 import 'prewelcome.dart';
-import './screens/home_scren.dart';
+import 'screens/home_screen.dart';
 import './screens/login_screen.dart';
 import './screens/register_screen.dart';
 import './screens/detail_screen.dart';
@@ -26,6 +30,10 @@ class MyApp extends StatelessWidget {
         '/register': (ctx) => Registerscreen(),
         '/home': (ctx) => HomeScreen(),
         '/details': (ctx) => DetailsScreen(),
+        '/cart': (ctx) => CartScreen(),
+        '/profile': (ctx) => ProfileScreen(),
+        '/favorites': (ctx) => FavoritesScreen(),
+        '/orders': (ctx) => OrdersScreen(),
       },
     );
   }
