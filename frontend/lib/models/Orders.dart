@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopperz/models/Product.dart';
+import './Product.dart';
 
 class Orders {
   final Product product;

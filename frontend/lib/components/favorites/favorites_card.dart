@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '/models/Favorites.dart';
+import '../../models/Favorites.dart';
 
-import '../../../constants.dart';
+import '../../constants.dart';
 
 class FavoritesCard extends StatelessWidget {
   const FavoritesCard({

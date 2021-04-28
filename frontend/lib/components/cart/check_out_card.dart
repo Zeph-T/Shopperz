@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/default_button.dart';
+import '../../default_button.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({

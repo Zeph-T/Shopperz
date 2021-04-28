@@ -21,7 +21,7 @@ router.get('/:category',(req,res)=>{
 
 router.get('/itemSearch',(req,res)=>{
     const regex = new RegExp(req.body.string, 'i');
-    Item.find({name:{$regex: regex}},{name:1,_id:0}).limit(5).then(docs=>{
+    Item.find({name:{$regex: regex}},{name:1,_id:1}).limit(5).then(docs=>{
         res.send(docs);
     }).catch(err=>{
         res.send(err);
@@ -30,7 +30,7 @@ router.get('/itemSearch',(req,res)=>{
 
 router.get('/itemSearch/:item',(req,res)=>{
     const item = new Regexp(req.params.item,'i');
-    Item.find({name:{$regex : item}},{image:1,name:1,cost:1}).then(docs=>{
+    Item.find({name:{$regex : item}},{image:1,name:1,cost:1,_id:1}).then(docs=>{
         res.send(docs);
     }).catch(err=>{
         res.send(err);

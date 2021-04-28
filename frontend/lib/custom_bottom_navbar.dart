@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import './screens/home_screen.dart';
-import './screens/profile_screen.dart';
 
-import '../constants.dart';
-import '../enums.dart';
+import './constants.dart';
+import './enums.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({

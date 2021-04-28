@@ -21,10 +21,6 @@ const UserSchema = mongoose.Schema({
         type:Date,
         default : Date.now()
     },
-    isVendor:{
-        type:Boolean,
-        defualt:false
-    },
     cart:[{
         type:mongoose.Types.ObjectId,
         ref:'Item'
@@ -32,7 +28,13 @@ const UserSchema = mongoose.Schema({
     Liked:{
         type:mongoose.Types.ObjectId,
         ref:'Item'
-    }
+    },
+    orders:[
+        {
+            type:mongoose.Types.ObjectId,
+            ref:'Item'
+        }
+    ]
 })
 
 module.exports = mongoose.model('User',UserSchema);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopperz/custom_bottom_navbar.dart';
-import 'package:shopperz/enums.dart';
-import '/models/Favorites.dart';
+import '../custom_bottom_navbar.dart';
+import '../enums.dart';
+import '../models/Favorites.dart';
 
 import '../components/favorites/body.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/models/Favorites.dart';
+import '../../models/Favorites.dart';
 import 'favorites_card.dart';
 
 class Body extends StatefulWidget {

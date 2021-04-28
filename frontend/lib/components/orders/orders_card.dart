@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '/models/Orders.dart';
+import '../../models/Orders.dart';
 
-import '../../../constants.dart';
+import '../../constants.dart';
 
 class OrdersCard extends StatelessWidget {
   const OrdersCard({
