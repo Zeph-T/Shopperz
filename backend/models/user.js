@@ -22,8 +22,8 @@ const UserSchema = mongoose.Schema({
         default : Date.now()
     },
     cart:[{
-        type:mongoose.Types.ObjectId,
-        ref:'Item'
+        item:{type:mongoose.Types.ObjectId,ref:'Item'},
+        QtyAndSize:{Qty:{type:Number},Size:{type:Number}}
     }],
     Liked:{
         type:mongoose.Types.ObjectId,
@@ -31,8 +31,8 @@ const UserSchema = mongoose.Schema({
     },
     orders:[
         {
-            type:mongoose.Types.ObjectId,
-            ref:'Item'
+            item:{type:mongoose.Types.ObjectId,ref:'Item'},
+            QtyAndSize:{Qty:{type:Number},Size:{type:Number}}
         }
     ]
 })

@@ -1,7 +1,8 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const User = require('../models/user');
 const router = express.Router();
-
+const Item = require('../models/items');
 router.post('/signup',(req,res)=>{
     User.findOne({mobileNumber : req.body.mobileNumber},(err,user)=>{
         if(err){
@@ -44,10 +45,10 @@ router.post('/signin',(req,res)=>{
         else if(user!==null){
             req.Id = user._id;
             res.status(200);
-            res.json(user);
+            return res.json(user);
         }else{
             res.status(404);
-            res.json({
+            return res.json({
                 message : 'User Details not found'
             })
         }
@@ -56,41 +57,110 @@ router.post('/signin',(req,res)=>{
 
 
 
-router.post('/:number/BuyProducts',(req,res)=>{
+router.post('/:number/BuyOrders',(req,res)=>{
     let number = req.params.number;
-    User.findOne({mobileNumber:number}).then(user=>{
-        if(!user){
-            res.send('No User Found!');
-            res.status(404);
-        }else{
-            req.body.items.forEach(item=>{
-                user.orders.push(item);
-            })
-            user.save(err=>{
+    let OrderItems = req.body.orderItems;
+        User.findOne({mobileNumber:number}).then((oUser=>{
+            OrderItems.forEach(element => {
+                let order = {
+                    item:mongoose.Types.ObjectId(element.item),
+                    QtyAndSize:{
+                        Qty:element.QtyAndSize.Qty,
+                        Size:element.QtyAndSize.Size
+                    }
+                }
+                oUser.orders.push(order)
+            });
+            oUser.save((err,user)=>{
                 if(err){
-                    res.send(err);
-                    res.status(400);
+                    res.status(400)
+                    return res.send(err);
                 }else{
                     res.status(200);
-                    res.send('Order Recieved!');
+                    return res.send('Order Placed!')
                 }
             })
-        }
-    })
+        })).catch(err=>{
+            res.status(400);
+            return res.send(err);
+        })
 })
 
 
-router.get('/:number/getProducts',(req,res)=>{
+router.get('/:number/getOrders',(req,res)=>{
     let number = req.params.number;
-    User.findOne({mobileNumber:number},{mobileNumber:1,_id:0}).populate({path:'orders',model:'Item',select:{name:1,imageData:1,_id:1,title:1,Description:1,Availability:1}}).then(userProducts=>{
+    User.findOne({mobileNumber:number}).populate({path:'orders.item',model:'Item'}).then(userProducts=>{
         if(!userProducts){
             res.status(404);
             res.send('User not Found');
         }else{
             res.status(200);
-            res.send(userProducts);
+            res.send(Object.values(userProducts.orders));
         }
     })
 })
 
+
+router.get('/:number/getCart',(req,res)=>{
+    let number = req.params.number;
+    User.findOne({mobileNumber:number}).populate({path:'cart.itemId',model:'Item'}).lean().then(userProducts=>{
+        res.status(200);
+        items = Object.values(userProducts.cart)
+        return res.send(items);
+    }).catch(err=>{
+        res.status(400);
+        return res.send(err);
+    })
+}) 
+
+
+router.post('/:number/AddToLiked',(req,res)=>{
+    let number = req.params.number;
+    Item.findOne({_id:mongoose.Types.ObjectId(req.body._id)}).lean().then(oItem=>{
+        User.findOneAndUpdate({mobileNumber:number},{$push:{Liked: mongoose.Types.ObjectId(oItem._id) }}).then(oUser=>{
+            res.status(200);
+            return res.send('Added to Liked!');
+        }).catch(err=>{
+            res.status(400);
+            return res.send(err);
+        })
+    })
+})
+
+router.post('/:number/AddToCart',(req,res)=>{
+    let number = req.params.number;
+    Item.findOne({_id:req.body._id}).lean().then(oItem=>{
+        User.findOneAndUpdate({mobileNumber:number},{$push:{cart:{itemId:mongoose.Types.ObjectId(oItem._id),QtyAndSize:{Qty:req.body.Qty,Size:req.body.Size}}}}).then(oUser=>{
+            res.status(200);
+            return res.send('Added to  Cart!');
+        }).catch(err=>{
+            res.status(400);
+            return res.send(err);
+        })
+    })
+})
+
+router.get('/:number/getLiked',(req,res)=>{
+    let number = req.params.number;
+    User.findOne({mobileNumber:number}).populate({path:'Liked',model:'Item'}).lean().then(oItems=>{
+        res.status(200);
+        return res.send(Object.values(oItems.Liked));
+    }).catch(err=>{
+        res.status(400);
+        return res.send(err);
+    })
+})
+
+
+router.post('/:number/removeItemFromLiked',(req,res)=>{
+    let number = req.params.number;
+    User.findOne({mobileNumber:number}).then((oUser=>{
+        oUser.Liked.pull(mongoose.Types.ObjectId(req.body._id));
+        res.status(200);
+        return res.send('Removed from liked!');
+    }))
+})
+
 module.exports = router;
+
+

@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 7000 ;
 
 
-mongoose.connect(process.env.DB_STRING,{ useNewUrlParser: true , useUnifiedTopology: true});
+mongoose.connect('mongodb+srv://zeph:Zeph@2002@shopperz.vpk0e.mongodb.net/Shopperz',{ useNewUrlParser: true , useUnifiedTopology: true});
 
 app.get('/',(req,res)=>{
     res.send('Connected!');
