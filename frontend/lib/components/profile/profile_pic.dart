@@ -1,10 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class ProfilePic extends StatelessWidget {
   const ProfilePic({
     Key key,
+    this.url,
   }) : super(key: key);
-
+  final String url;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -15,7 +18,7 @@ class ProfilePic extends StatelessWidget {
         overflow: Overflow.visible,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage("assets/images/Profile Image.png"),
+            backgroundImage: NetworkImage(url),
           ),
           Positioned(
             right: -16,
@@ -30,7 +33,7 @@ class ProfilePic extends StatelessWidget {
                 ),
                 color: Color(0xFFF5F6F9),
                 onPressed: () {},
-                child: Icon(Icons.camera),
+                child: Icon(Icons.camera_alt),
               ),
             ),
           )

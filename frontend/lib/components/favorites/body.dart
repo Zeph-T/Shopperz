@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../models/Favorites.dart';
+
 import 'favorites_card.dart';
 
 class Body extends StatefulWidget {
+  Body(this.number, this.data);
+  final data;
+  final String number;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -13,15 +16,15 @@ class _BodyState extends State<Body> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: (20)),
       child: ListView.builder(
-        itemCount: demoCarts.length,
+        itemCount: widget.data.length,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(demoCarts[index].product.id.toString()),
+            key: Key(widget.data[index].id.toString()),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               setState(() {
-                demoCarts.removeAt(index);
+                widget.data.removeAt(index); //again
               });
             },
             background: Container(
@@ -37,7 +40,7 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            child: FavoritesCard(fav: demoCarts[index]),
+            child: FavoritesCard(fav: widget.data[index]),
           ),
         ),
       ),

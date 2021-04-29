@@ -7,8 +7,12 @@ import 'search_feild.dart';
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
     Key key,
+    @required this.args,
+    @required this.number,
   }) : super(key: key);
+  final String args;
 
+  final String number;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,9 +22,14 @@ class HomeHeader extends StatelessWidget {
         children: [
           SearchField(),
           IconBtnWithCounter(
-            svgSrc: "dummy",
+            svgSrc: Icons.shopping_cart,
             numOfitem: 3,
-            press: () {},
+            press: () {
+              print(args);
+              args == null
+                  ? Navigator.pushNamed(context, '/cart', arguments: number)
+                  : null;
+            },
           ),
         ],
       ),

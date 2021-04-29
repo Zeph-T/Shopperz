@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/Orders.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class OrdersCard extends StatelessWidget {
   const OrdersCard({
@@ -9,7 +8,7 @@ class OrdersCard extends StatelessWidget {
     @required this.orders,
   }) : super(key: key);
 
-  final Orders orders;
+  final orders;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class OrdersCard extends StatelessWidget {
                 color: Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(orders.product.images[0]),
+              child: Image.asset(orders.images[0]),
             ),
           ),
         ),
@@ -34,14 +33,14 @@ class OrdersCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              orders.product.title,
+              orders.title,
               style: TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
             SizedBox(height: 10),
             Text.rich(
               TextSpan(
-                text: "\$${orders.product.price}",
+                text: "\$${orders.price}",
                 style: TextStyle(
                     fontWeight: FontWeight.w600, color: kPrimaryColor),
               ),

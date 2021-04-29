@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './Product.dart';
+import '/models/Product.dart';
 
 class Orders {
   final Product product;

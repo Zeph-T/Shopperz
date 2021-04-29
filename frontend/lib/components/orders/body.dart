@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../models/Orders.dart';
+
 import 'orders_card.dart';
 
 class Body extends StatefulWidget {
+  Body(this.number, this.data);
+  final String number;
+  final data;
   @override
   _BodyState createState() => _BodyState();
 }
@@ -13,15 +16,15 @@ class _BodyState extends State<Body> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: (20)),
       child: ListView.builder(
-        itemCount: demoOrders.length,
+        itemCount: widget.data.length,
         itemBuilder: (context, index) => Padding(
           padding: EdgeInsets.symmetric(vertical: 10),
           child: Dismissible(
-            key: Key(demoOrders[index].product.id.toString()),
+            key: Key(widget.data[index].id.toString()),
             direction: DismissDirection.endToStart,
             onDismissed: (direction) {
               setState(() {
-                demoOrders.removeAt(index);
+                widget.data.removeAt(index);
               });
             },
             background: Container(
@@ -37,7 +40,7 @@ class _BodyState extends State<Body> {
                 ],
               ),
             ),
-            child: OrdersCard(orders: demoOrders[index]),
+            child: OrdersCard(orders: widget.data[index]),
           ),
         ),
       ),

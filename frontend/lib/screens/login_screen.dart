@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+var responseData = null;
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -108,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       _registerUser();
+                      Navigator.pushReplacementNamed(context, '/home');
                     } else {
                       print('Invalid');
                     }
@@ -136,25 +138,19 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isSubmitting = true;
     });
-    Map<String, String> headers = {'Content-Type': 'application/json'};
-    final msg = jsonEncode({
-      "mobileNumber": _phone,
-      "password": _password,
-    });
     if (_isUser == true) {
-      var response = await http.post(
-          Uri.parse('http://192.168.0.103:7000/users/signin'),
-          headers: headers,
-          body: msg);
+      var response = await http
+          .post(Uri.parse('http://localhost:7000/users/signin'), body: {
+        "mobileNumber": _phone,
+        "password": _password,
+      });
       final responseData = response.body;
       if (response.statusCode == 200) {
         setState(() {
           _isSubmitting = false;
         });
         _showSuccessSnack();
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('mobileNumber', _phone);
-        _redirectUser();
+        _redirectUser(responseData, _isUser);
         //print(responseData);
       } else {
         setState(() => _isSubmitting = false);
@@ -162,19 +158,18 @@ class _LoginScreenState extends State<LoginScreen> {
         _showErrorSnack(errorMsg);
       }
     } else {
-      var response = await http.post(
-          Uri.parse('http://192.168.0.103:7000/vendors/signin'),
-          headers: headers,
-          body: msg);
-      final responseData = response.body;
+      var response = await http
+          .post(Uri.parse('http://localhost:7000/vendors/signin'), body: {
+        "mobileNumber": _phone,
+        "password": _password,
+      });
+      responseData = response.body;
       if (response.statusCode == 200) {
         setState(() {
           _isSubmitting = false;
         });
         _showSuccessSnack();
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('mobileNumber', _phone);
-        _redirectUser();
+        _redirectUser(responseData, _isUser);
         //print(responseData);
       } else {
         setState(() => _isSubmitting = false);
@@ -191,9 +186,13 @@ class _LoginScreenState extends State<LoginScreen> {
     throw Exception('Error Logging In');
   }
 
-  void _redirectUser() {
+  void _redirectUser(responseData, isUser) {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/home');
+      isUser
+          ? Navigator.pushReplacementNamed(context, '/home',
+              arguments: responseData)
+          : Navigator.pushReplacementNamed(context, '/vendor_screen',
+              arguments: responseData);
     });
   }
 

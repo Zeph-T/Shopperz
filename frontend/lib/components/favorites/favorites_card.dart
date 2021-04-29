@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/Favorites.dart';
 
-import '../../constants.dart';
+import '../../../constants.dart';
 
 class FavoritesCard extends StatelessWidget {
   const FavoritesCard({
@@ -9,7 +8,7 @@ class FavoritesCard extends StatelessWidget {
     @required this.fav,
   }) : super(key: key);
 
-  final Favorites fav;
+  final fav;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class FavoritesCard extends StatelessWidget {
                 color: Color(0xFFF5F6F9),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(fav.product.images[0]),
+              child: Image.asset(fav.images[0]),
             ),
           ),
         ),
@@ -34,14 +33,14 @@ class FavoritesCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              fav.product.title,
+              fav.title,
               style: TextStyle(color: Colors.black, fontSize: 16),
               maxLines: 2,
             ),
             SizedBox(height: 10),
             Text.rich(
               TextSpan(
-                text: "\$${fav.product.price}",
+                text: "\$${fav.price}",
                 style: TextStyle(
                     fontWeight: FontWeight.w600, color: kPrimaryColor),
               ),

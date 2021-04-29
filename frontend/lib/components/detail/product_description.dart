@@ -42,24 +42,23 @@ class ProductDescription extends StatelessWidget {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Container(
-                padding: EdgeInsets.all((15)),
-                width: (64),
-                decoration: BoxDecoration(
-                  color: product.isFavourite
-                      ? Color(0xFFFFE6E6)
-                      : Color(0xFFF5F6F9),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    bottomLeft: Radius.circular(20),
+              child: GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.all((15)),
+                  width: (64),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF5F6F9),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                    ),
                   ),
-                ),
-                child: Icon(
-                  Icons.favorite,
-                  size: 16,
-                  color: product.isFavourite
-                      ? Color(0xFFFF4848)
-                      : Color(0xFFDBDEE4),
+                  child: Icon(
+                    Icons.favorite,
+                    size: 16,
+                    color: Color(0xFFDBDEE4),
+                  ),
                 ),
               ),
             ),

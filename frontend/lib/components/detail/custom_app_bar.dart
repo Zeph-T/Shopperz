@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 // import '../../../size_config.dart';
 
 class CustomAppBar extends PreferredSize {
-  final double rating;
-
-  CustomAppBar({@required this.rating});
+  CustomAppBar();
 
   @override
   // AppBar().preferredSize.height provide us the height that appy on our app bar
@@ -41,7 +39,7 @@ class CustomAppBar extends PreferredSize {
               child: Row(
                 children: [
                   Text(
-                    "$rating",
+                    "5.0",
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
