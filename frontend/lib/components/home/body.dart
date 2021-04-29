@@ -8,6 +8,10 @@ import 'popular_products.dart';
 // import 'special_offers.dart';
 
 class Body extends StatelessWidget {
+  Body(this.args, this.number);
+  final String args;
+
+  final String number;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -15,7 +19,10 @@ class Body extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: (20)),
-            HomeHeader(),
+            HomeHeader(
+              args: args,
+              number: number,
+            ),
             SizedBox(height: (10)),
             // DiscountBanner(),
             ListCategories(),

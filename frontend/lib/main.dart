@@ -10,6 +10,7 @@ import 'screens/home_screen.dart';
 import './screens/login_screen.dart';
 import './screens/register_screen.dart';
 import './screens/detail_screen.dart';
+import 'screens/vendor_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,16 +31,17 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.deepOrange[200],
           textTheme: TextTheme(
               headline1: TextStyle(fontWeight: FontWeight.bold, fontSize: 40))),
-      home: number != null ? HomeScreen() : PreWelcome(),
+      home: number != null ? HomeScreen(number) : PreWelcome(),
       routes: {
         '/login': (ctx) => LoginScreen(),
         '/register': (ctx) => Registerscreen(),
-        '/home': (ctx) => HomeScreen(),
+        '/home': (ctx) => HomeScreen(number),
         '/details': (ctx) => DetailsScreen(),
         '/cart': (ctx) => CartScreen(),
         '/profile': (ctx) => ProfileScreen(),
         '/favorites': (ctx) => FavoritesScreen(),
         '/orders': (ctx) => OrdersScreen(),
+        '/vendor_screen': (ctx) => VendorScreen(),
       },
     );
   }

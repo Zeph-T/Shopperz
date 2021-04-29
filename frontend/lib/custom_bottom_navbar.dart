@@ -2,20 +2,23 @@ import 'package:flutter/material.dart';
 
 import './screens/home_screen.dart';
 
-import './constants.dart';
-import './enums.dart';
+import '../constants.dart';
+import '../enums.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
     Key key,
     @required this.selectedMenu,
+    @required this.number,
+    @required this.args,
   }) : super(key: key);
 
   final MenuState selectedMenu;
+  final String number;
+  final args;
 
   @override
   Widget build(BuildContext context) {
-    final Color inActiveIconColor = Color(0xFFB6B6B6);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
@@ -53,7 +56,11 @@ class CustomBottomNavBar extends StatelessWidget {
                     ? kPrimaryColor
                     : Colors.black,
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/favorites');
+                  Navigator.pushReplacementNamed(
+                    context,
+                    '/favorites',
+                    arguments: [number, args],
+                  );
                 },
               ),
               IconButton(
@@ -62,7 +69,8 @@ class CustomBottomNavBar extends StatelessWidget {
                     ? kPrimaryColor
                     : Colors.black,
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, '/orders');
+                  Navigator.pushReplacementNamed(context, '/orders',
+                      arguments: [number, args]);
                 },
               ),
               IconButton(
@@ -73,7 +81,8 @@ class CustomBottomNavBar extends StatelessWidget {
                         : Colors.black,
                   ),
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/profile');
+                    Navigator.pushReplacementNamed(context, '/profile',
+                        arguments: [number, args]);
                   }),
             ],
           )),

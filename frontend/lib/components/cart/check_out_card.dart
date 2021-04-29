@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
-import '../../default_button.dart';
+import '/default_button.dart';
 
 class CheckoutCard extends StatelessWidget {
   const CheckoutCard({
     Key key,
+    this.number,
+    this.data,
   }) : super(key: key);
+  final String number;
+  final List data;
+
+  String _getTotal() {
+    int k = 0;
+    data.map((e) {
+      k = k + int.parse(e.price);
+    });
+    return k.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$337.15",
+                        text: _getTotal(),
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],

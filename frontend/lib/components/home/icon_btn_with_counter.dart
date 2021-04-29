@@ -11,7 +11,7 @@ class IconBtnWithCounter extends StatelessWidget {
     @required this.press,
   }) : super(key: key);
 
-  final String svgSrc;
+  final IconData svgSrc;
   final int numOfitem;
   final GestureTapCallback press;
 
@@ -19,7 +19,7 @@ class IconBtnWithCounter extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(100),
-      onTap: press,
+      onTap: (press),
       child: Stack(
         overflow: Overflow.visible,
         children: [
@@ -31,9 +31,9 @@ class IconBtnWithCounter extends StatelessWidget {
                 color: kSecondaryColor.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.shopping_cart) //SvgPicture.asset(svgSrc),
+              child: Icon(svgSrc) //SvgPicture.asset(svgSrc),
               ),
-          if (numOfitem != 0)
+          if (numOfitem >= 0)
             Positioned(
               top: -3,
               right: 0,
